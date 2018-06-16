@@ -9,7 +9,13 @@
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of values" rel=Appendix href="index_values.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
-<link title="Domain_name" rel="Chapter" href="Domain_name.html"><title>Domain_name</title>
+<link title="Domain_name" rel="Chapter" href="Domain_name.html"><link title="Constructor" rel="Section" href="#2_Constructor">
+<link title="String representation" rel="Section" href="#2_Stringrepresentation">
+<link title="Predicates and basic operations" rel="Section" href="#2_Predicatesandbasicoperations">
+<link title="Comparison" rel="Section" href="#2_Comparison">
+<link title="Collections" rel="Section" href="#2_Collections">
+<link title="String list representation" rel="Section" href="#2_Stringlistrepresentation">
+<title>Domain_name</title>
 </head>
 <body>
 <div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
@@ -36,6 +42,46 @@
 </div>
 </div>
 
+<h3 id="2_Constructor">Constructor</h3>
+<pre><span id="VALroot"><span class="keyword">val</span> root</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">root</code> is the root domain ("."), the empty label.</p>
+</div>
+</div>
+<h3 id="2_Stringrepresentation">String representation</h3>
+<pre><span id="VALof_string"><span class="keyword">val</span> of_string</span> : <code class="type">?hostname:bool -><br>       string -> (<a href="Domain_name.html#TYPEt">t</a>, [> `Msg of string ]) Pervasives.result</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">of_string&nbsp;~hostname&nbsp;name</code> is either <code class="code">t</code>, the domain name, or an error if
+    the provided <code class="code">name</code> is not a valid domain name.  If <code class="code">hostname</code> is provided
+    and <code class="code"><span class="keyword">true</span></code> (the default), the contents is additionally checked for being a
+    valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+</div>
+</div>
+
+<pre><span id="VALof_string_exn"><span class="keyword">val</span> of_string_exn</span> : <code class="type">?hostname:bool -> string -> <a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">of_string_exn&nbsp;~hostname&nbsp;name</code> is <code class="code">t</code>, the domain name.  If <code class="code">hostname</code> is
+    provided and <code class="code"><span class="keyword">true</span></code> (the default), the contents is additionally checked for
+    being a valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+</div>
+<ul class="info-attributes">
+<li><b>Raises</b> <code>Invalid_argument</code> if <code class="code">name</code> is not a valid domain name.</li>
+</ul>
+</div>
+
+<pre><span id="VALto_string"><span class="keyword">val</span> to_string</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">to_string&nbsp;t</code> is <code class="code"><span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"."</span>&nbsp;(to_strings&nbsp;t)</code>, a human-readable
+    representation of <code class="code">t</code>.</p>
+</div>
+</div>
+<h3 id="2_Predicatesandbasicoperations">Predicates and basic operations</h3>
+<pre><span id="VALcanonical"><span class="keyword">val</span> canonical</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> <a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">canonical&nbsp;t</code> is <code class="code">t'</code>, the canonical domain name, as specified in RFC 4034
+    (and 2535): all characters are lowercase.</p>
+</div>
+</div>
 
 <pre><span id="VALis_hostname"><span class="keyword">val</span> is_hostname</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
 <div class="info-desc">
@@ -57,14 +103,17 @@
 </div>
 </div>
 
-<pre><span id="VALroot"><span class="keyword">val</span> root</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<pre><span id="VALsub"><span class="keyword">val</span> sub</span> : <code class="type">subdomain:<a href="Domain_name.html#TYPEt">t</a> -> domain:<a href="Domain_name.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
 <div class="info-desc">
-<p><code class="code">root</code> is the root domain ("."), the empty label.</p>
+<p><code class="code">sub&nbsp;~subdomain&nbsp;~domain</code> is <code class="code"><span class="keyword">true</span></code> if <code class="code">subdomain</code> contains any labels
+    prepended to <code class="code">domain</code>: <code class="code">foo.bar.com</code> is a subdomain of <code class="code">bar.com</code> and of
+    <code class="code">com</code>, <code class="code">sub&nbsp;~subdomain:x&nbsp;~domain:root</code> is true for all <code class="code">x</code>.</p>
 </div>
 </div>
 
 <pre><span id="VALprepend"><span class="keyword">val</span> prepend</span> : <code class="type">?hostname:bool -><br>       <a href="Domain_name.html#TYPEt">t</a> -><br>       string -> (<a href="Domain_name.html#TYPEt">t</a>, [> `Msg of string ]) Pervasives.result</code></pre><div class="info ">
 <div class="info-desc">
+<h3 id="2_Labeladditionandremoval">Label addition and removal</h3>
 <p><code class="code">prepend&nbsp;~hostname&nbsp;name&nbsp;pre</code> is either <code class="code">t</code>, the new domain name, or an
     error.  If <code class="code">hostname</code> is provided and <code class="code"><span class="keyword">true</span></code> (the default), the resulting
     domain name is checked for being a valid host name using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
@@ -102,34 +151,39 @@
 <li><b>Raises</b> <code>Invalid_argument</code> if there are not sufficient labels.</li>
 </ul>
 </div>
-
-<pre><span id="VALof_string"><span class="keyword">val</span> of_string</span> : <code class="type">?hostname:bool -><br>       string -> (<a href="Domain_name.html#TYPEt">t</a>, [> `Msg of string ]) Pervasives.result</code></pre><div class="info ">
+<h3 id="2_Comparison">Comparison</h3>
+<pre><span id="VALequal"><span class="keyword">val</span> equal</span> : <code class="type">?case_sensitive:bool -> <a href="Domain_name.html#TYPEt">t</a> -> <a href="Domain_name.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
 <div class="info-desc">
-<p><code class="code">of_string&nbsp;~hostname&nbsp;name</code> is either <code class="code">t</code>, the domain name, or an error if
-    the provided <code class="code">name</code> is not a valid domain name.  If <code class="code">hostname</code> is provided
-    and <code class="code"><span class="keyword">true</span></code> (the default), the contents is additionally checked for being a
-    valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+<p><code class="code">equal&nbsp;~case&nbsp;t&nbsp;t'</code> is <code class="code"><span class="keyword">true</span></code> if all labels of <code class="code">t</code> and <code class="code">t'</code> are equal.
+    If <code class="code">case_sensitive</code> is provided and <code class="code"><span class="keyword">true</span></code>, the cases of the labels are
+    respected (default: <code class="code"><span class="keyword">false</span></code>).</p>
 </div>
 </div>
 
-<pre><span id="VALof_string_exn"><span class="keyword">val</span> of_string_exn</span> : <code class="type">?hostname:bool -> string -> <a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<pre><span id="VALcompare"><span class="keyword">val</span> compare</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> <a href="Domain_name.html#TYPEt">t</a> -> int</code></pre><div class="info ">
 <div class="info-desc">
-<p><code class="code">of_string_exn&nbsp;~hostname&nbsp;name</code> is <code class="code">t</code>, the domain name.  If <code class="code">hostname</code> is
-    provided and <code class="code"><span class="keyword">true</span></code> (the default), the contents is additionally checked for
-    being a valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+<p><code class="code">compare&nbsp;t&nbsp;t'</code> compares the domain names <code class="code">t</code> and <code class="code">t'</code> using a case
+    insensitive string comparison.</p>
 </div>
-<ul class="info-attributes">
-<li><b>Raises</b> <code>Invalid_argument</code> if <code class="code">name</code> is not a valid domain name.</li>
-</ul>
 </div>
 
-<pre><span id="VALto_string"><span class="keyword">val</span> to_string</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+<pre><span id="VALcompare_sub"><span class="keyword">val</span> compare_sub</span> : <code class="type">string -> string -> int</code></pre><div class="info ">
 <div class="info-desc">
-<p><code class="code">to_string&nbsp;t</code> is <code class="code"><span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"."</span>&nbsp;(to_strings&nbsp;t)</code>, a human-readable
-    representation of <code class="code">t</code>.</p>
+<p><code class="code">compare_sub&nbsp;t&nbsp;t'</code> compares the labels <code class="code">t</code> and <code class="code">t'</code> using a case
+    insensitive string comparison.</p>
 </div>
+</div>
+<h3 id="2_Collections">Collections</h3>
+<pre><span id="MODULEMap"><span class="keyword">module</span> <a href="Domain_name.Map.html">Map</a></span>: <code class="type">Map.S</code><code class="type">  with type key = t</code></pre><div class="info">
+<p>The module of a domain name map</p>
+
 </div>
 
+<pre><span id="MODULESet"><span class="keyword">module</span> <a href="Domain_name.Set.html">Set</a></span>: <code class="type">Set.S</code><code class="type">  with type elt = t</code></pre><div class="info">
+<p>The module of a domain name set</p>
+
+</div>
+<h3 id="2_Stringlistrepresentation">String list representation</h3>
 <pre><span id="VALof_strings"><span class="keyword">val</span> of_strings</span> : <code class="type">?hostname:bool -><br>       string list -> (<a href="Domain_name.html#TYPEt">t</a>, [> `Msg of string ]) Pervasives.result</code></pre><div class="info ">
 <div class="info-desc">
 <p><code class="code">of_strings&nbsp;~hostname&nbsp;labels</code> is either <code class="code">t</code>, a domain name, or an error if
@@ -157,56 +211,10 @@
 </div>
 </div>
 
-<pre><span id="VALcanonical"><span class="keyword">val</span> canonical</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> <a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
-<div class="info-desc">
-<p><code class="code">canonical&nbsp;t</code> is <code class="code">t'</code>, the canonical domain name, as specified in RFC 4034
-    (and 2535): all characters are lowercase.</p>
-</div>
-</div>
-
 <pre><span id="VALpp"><span class="keyword">val</span> pp</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> Fmt.t</code></pre><div class="info ">
 <div class="info-desc">
+<h3 id="2_Prettyprinter">Pretty printer</h3>
 <p><code class="code">pp&nbsp;ppf&nbsp;t</code> pretty prints the domain name <code class="code">t</code> on <code class="code">ppf</code>.</p>
 </div>
-</div>
-
-<pre><span id="VALcompare"><span class="keyword">val</span> compare</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> <a href="Domain_name.html#TYPEt">t</a> -> int</code></pre><div class="info ">
-<div class="info-desc">
-<p><code class="code">compare&nbsp;t&nbsp;t'</code> compares the domain names <code class="code">t</code> and <code class="code">t'</code> using a case
-    insensitive string comparison.</p>
-</div>
-</div>
-
-<pre><span id="VALequal"><span class="keyword">val</span> equal</span> : <code class="type">?case_sensitive:bool -> <a href="Domain_name.html#TYPEt">t</a> -> <a href="Domain_name.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
-<div class="info-desc">
-<p><code class="code">equal&nbsp;~case&nbsp;t&nbsp;t'</code> is <code class="code"><span class="keyword">true</span></code> if all labels of <code class="code">t</code> and <code class="code">t'</code> are equal.
-    If <code class="code">case_sensitive</code> is provided and <code class="code"><span class="keyword">true</span></code>, the cases of the labels are
-    respected (default: <code class="code"><span class="keyword">false</span></code>).</p>
-</div>
-</div>
-
-<pre><span id="VALcompare_sub"><span class="keyword">val</span> compare_sub</span> : <code class="type">string -> string -> int</code></pre><div class="info ">
-<div class="info-desc">
-<p><code class="code">compare_sub&nbsp;t&nbsp;t'</code> compares the labels <code class="code">t</code> and <code class="code">t'</code> using a case
-    insensitive string comparison.</p>
-</div>
-</div>
-
-<pre><span id="VALsub"><span class="keyword">val</span> sub</span> : <code class="type">subdomain:<a href="Domain_name.html#TYPEt">t</a> -> domain:<a href="Domain_name.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
-<div class="info-desc">
-<p><code class="code">sub&nbsp;~subdomain&nbsp;~domain</code> is <code class="code"><span class="keyword">true</span></code> if <code class="code">subdomain</code> contains any labels
-    prepended to <code class="code">domain</code>: <code class="code">foo.bar.com</code> is a subdomain of <code class="code">bar.com</code> and of
-    <code class="code">com</code>, <code class="code">sub&nbsp;~subdomain:x&nbsp;~domain:root</code> is true for all <code class="code">x</code>.</p>
-</div>
-</div>
-
-<pre><span id="MODULEMap"><span class="keyword">module</span> <a href="Domain_name.Map.html">Map</a></span>: <code class="type">Map.S</code><code class="type">  with type key = t</code></pre><div class="info">
-<p>The module of a domain name map</p>
-
-</div>
-
-<pre><span id="MODULESet"><span class="keyword">module</span> <a href="Domain_name.Set.html">Set</a></span>: <code class="type">Set.S</code><code class="type">  with type elt = t</code></pre><div class="info">
-<p>The module of a domain name set</p>
-
 </div>
 </body></html>
