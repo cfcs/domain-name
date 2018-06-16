@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Domain_name" rel="Chapter" href="Domain_name.html"><title>Domain_name</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Domain_name.html">Domain_name</a></h1>
+
+<pre><span id="MODULEDomain_name"><span class="keyword">module</span> Domain_name</span>: <code class="code"><span class="keyword">sig</span></code> <a href="Domain_name.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+<div class="info ">
+<div class="info-desc">
+<p>The type of a domain name, a sequence of labels separated by dots.  Each
+    label may contain any bytes. The length of each label may not exceed 63
+    charactes.  The total length of a domain name is limited to 253 (byte
+    representation is 255), but other protocols (such as SMTP) may apply even
+    smaller limits.  A domain name label is case preserving, comparison is done
+    in a case insensitive manner.</p>
+
+<p>The invariants on the length of domain names are preserved throughout the
+    module - no <code class="code">t</code> will exist which violates these.</p>
+
+<p>The specification of domain names originates from
+    <a href="https://tools.ietf.org/html/rfc1035">RFC 1035</a>.</p>
+</div>
+</div>
+
+
+<pre><span id="VALis_hostname"><span class="keyword">val</span> is_hostname</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">is_hostname&nbsp;t</code> is <code class="code"><span class="keyword">true</span></code> if <code class="code">t</code> is a hostname: the contents of the domain
+    name is limited: each label may start with a digit or letter, followed by
+    digits, letters, or hyphens.</p>
+</div>
+</div>
+
+<pre><span id="VALis_service"><span class="keyword">val</span> is_service</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">is_service&nbsp;t</code> is <code class="code"><span class="keyword">true</span></code> if <code class="code">t</code> is a service label: the first label is a
+    service name (containing of letters, digits, hyphens) prefixed with "_".
+    The service name may not contain a hyphen following another hyphen, no hypen
+    at the beginning or end, and must contain at least one letter.  The total
+    length must be between 1 and at most 15 characters.  The second label is the
+    protocol, prefixed by "_" (at the moment, tcp, udp, or sctp), and the
+    remaining must be a host name.</p>
+</div>
+</div>
+
+<pre><span id="VALroot"><span class="keyword">val</span> root</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">root</code> is the root domain ("."), the empty label.</p>
+</div>
+</div>
+
+<pre><span id="VALprepend"><span class="keyword">val</span> prepend</span> : <code class="type">?hostname:bool -><br>       <a href="Domain_name.html#TYPEt">t</a> -><br>       string -> (<a href="Domain_name.html#TYPEt">t</a>, [> `Msg of string ]) Pervasives.result</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">prepend&nbsp;~hostname&nbsp;name&nbsp;pre</code> is either <code class="code">t</code>, the new domain name, or an
+    error.  If <code class="code">hostname</code> is provided and <code class="code"><span class="keyword">true</span></code> (the default), the resulting
+    domain name is checked for being a valid host name using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+</div>
+</div>
+
+<pre><span id="VALprepend_exn"><span class="keyword">val</span> prepend_exn</span> : <code class="type">?hostname:bool -> <a href="Domain_name.html#TYPEt">t</a> -> string -> <a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">prepend_exn&nbsp;~hostname&nbsp;name&nbsp;pre</code> is <code class="code">t</code>, the new domain name.</p>
+</div>
+<ul class="info-attributes">
+<li><b>Raises</b> <code>Invalid_argument</code> if <code class="code">pre</code> is not a valid domain name. If
+    <code class="code">hostname</code> is provided and <code class="code"><span class="keyword">true</span></code> (the default), the contents is
+    additionally checked for being a valid host name using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</li>
+</ul>
+</div>
+
+<pre><span id="VALdrop_labels"><span class="keyword">val</span> drop_labels</span> : <code class="type">?back:bool -><br>       ?amount:int -><br>       <a href="Domain_name.html#TYPEt">t</a> -> (<a href="Domain_name.html#TYPEt">t</a>, [> `Msg of string ]) Pervasives.result</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">drop_labels&nbsp;~back&nbsp;~amount&nbsp;t</code> is either <code class="code">t</code>, a domain name with <code class="code">amount</code>
+    (defaults to 1) labels dropped from the beginning (unless <code class="code">back</code> is provided
+    and <code class="code"><span class="keyword">true</span></code>, defaults to <code class="code"><span class="keyword">false</span></code>).  <code class="code">drop_labels</code> applied to <code class="code">foo.com</code> is
+    <code class="code">com</code>.</p>
+</div>
+</div>
+
+<pre><span id="VALdrop_labels_exn"><span class="keyword">val</span> drop_labels_exn</span> : <code class="type">?back:bool -> ?amount:int -> <a href="Domain_name.html#TYPEt">t</a> -> <a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">drop_labels_exn&nbsp;~back&nbsp;~amount&nbsp;t</code> is either <code class="code">t</code>, a domain name with <code class="code">amount</code>
+    (defaults to 1) labels dropped from the beginning (unless <code class="code">back</code> is provided
+    and <code class="code"><span class="keyword">true</span></code>, defaults to <code class="code"><span class="keyword">false</span></code>).  <code class="code">drop_labels</code> applied to <code class="code">foo.com</code> is
+    <code class="code">com</code>.</p>
+</div>
+<ul class="info-attributes">
+<li><b>Raises</b> <code>Invalid_argument</code> if there are not sufficient labels.</li>
+</ul>
+</div>
+
+<pre><span id="VALof_string"><span class="keyword">val</span> of_string</span> : <code class="type">?hostname:bool -><br>       string -> (<a href="Domain_name.html#TYPEt">t</a>, [> `Msg of string ]) Pervasives.result</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">of_string&nbsp;~hostname&nbsp;name</code> is either <code class="code">t</code>, the domain name, or an error if
+    the provided <code class="code">name</code> is not a valid domain name.  If <code class="code">hostname</code> is provided
+    and <code class="code"><span class="keyword">true</span></code> (the default), the contents is additionally checked for being a
+    valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+</div>
+</div>
+
+<pre><span id="VALof_string_exn"><span class="keyword">val</span> of_string_exn</span> : <code class="type">?hostname:bool -> string -> <a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">of_string_exn&nbsp;~hostname&nbsp;name</code> is <code class="code">t</code>, the domain name.  If <code class="code">hostname</code> is
+    provided and <code class="code"><span class="keyword">true</span></code> (the default), the contents is additionally checked for
+    being a valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+</div>
+<ul class="info-attributes">
+<li><b>Raises</b> <code>Invalid_argument</code> if <code class="code">name</code> is not a valid domain name.</li>
+</ul>
+</div>
+
+<pre><span id="VALto_string"><span class="keyword">val</span> to_string</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">to_string&nbsp;t</code> is <code class="code"><span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"."</span>&nbsp;(to_strings&nbsp;t)</code>, a human-readable
+    representation of <code class="code">t</code>.</p>
+</div>
+</div>
+
+<pre><span id="VALof_strings"><span class="keyword">val</span> of_strings</span> : <code class="type">?hostname:bool -><br>       string list -> (<a href="Domain_name.html#TYPEt">t</a>, [> `Msg of string ]) Pervasives.result</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">of_strings&nbsp;~hostname&nbsp;labels</code> is either <code class="code">t</code>, a domain name, or an error if
+    the provided <code class="code">labels</code> violate domain name constraints.  If <code class="code">hostname</code> is
+    provided and <code class="code"><span class="keyword">true</span></code> (the default), the labels are additionally checked for
+    being a valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+</div>
+</div>
+
+<pre><span id="VALof_strings_exn"><span class="keyword">val</span> of_strings_exn</span> : <code class="type">?hostname:bool -> string list -> <a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">of_strings_exn&nbsp;~hostname&nbsp;labels</code> is <code class="code">t</code>, a domain name.</p>
+</div>
+<ul class="info-attributes">
+<li><b>Raises</b> <code>Invalid_argument</code> if <code class="code">labels</code> are not a valid domain name. If
+    <code class="code">hostname</code> is provided and <code class="code"><span class="keyword">true</span></code> (the default), the labels are
+    additionally checked for being a valid hostname using
+    <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</li>
+</ul>
+</div>
+
+<pre><span id="VALto_strings"><span class="keyword">val</span> to_strings</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> string list</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">to_strings&nbsp;t</code> is the list of labels of <code class="code">t</code>.</p>
+</div>
+</div>
+
+<pre><span id="VALcanonical"><span class="keyword">val</span> canonical</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> <a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">canonical&nbsp;t</code> is <code class="code">t'</code>, the canonical domain name, as specified in RFC 4034
+    (and 2535): all characters are lowercase.</p>
+</div>
+</div>
+
+<pre><span id="VALpp"><span class="keyword">val</span> pp</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> Fmt.t</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">pp&nbsp;ppf&nbsp;t</code> pretty prints the domain name <code class="code">t</code> on <code class="code">ppf</code>.</p>
+</div>
+</div>
+
+<pre><span id="VALcompare"><span class="keyword">val</span> compare</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> <a href="Domain_name.html#TYPEt">t</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">compare&nbsp;t&nbsp;t'</code> compares the domain names <code class="code">t</code> and <code class="code">t'</code> using a case
+    insensitive string comparison.</p>
+</div>
+</div>
+
+<pre><span id="VALequal"><span class="keyword">val</span> equal</span> : <code class="type">?case_sensitive:bool -> <a href="Domain_name.html#TYPEt">t</a> -> <a href="Domain_name.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">equal&nbsp;~case&nbsp;t&nbsp;t'</code> is <code class="code"><span class="keyword">true</span></code> if all labels of <code class="code">t</code> and <code class="code">t'</code> are equal.
+    If <code class="code">case_sensitive</code> is provided and <code class="code"><span class="keyword">true</span></code>, the cases of the labels are
+    respected (default: <code class="code"><span class="keyword">false</span></code>).</p>
+</div>
+</div>
+
+<pre><span id="VALcompare_sub"><span class="keyword">val</span> compare_sub</span> : <code class="type">string -> string -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">compare_sub&nbsp;t&nbsp;t'</code> compares the labels <code class="code">t</code> and <code class="code">t'</code> using a case
+    insensitive string comparison.</p>
+</div>
+</div>
+
+<pre><span id="VALsub"><span class="keyword">val</span> sub</span> : <code class="type">subdomain:<a href="Domain_name.html#TYPEt">t</a> -> domain:<a href="Domain_name.html#TYPEt">t</a> -> bool</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">sub&nbsp;~subdomain&nbsp;~domain</code> is <code class="code"><span class="keyword">true</span></code> if <code class="code">subdomain</code> contains any labels
+    prepended to <code class="code">domain</code>: <code class="code">foo.bar.com</code> is a subdomain of <code class="code">bar.com</code> and of
+    <code class="code">com</code>, <code class="code">sub&nbsp;~subdomain:x&nbsp;~domain:root</code> is true for all <code class="code">x</code>.</p>
+</div>
+</div>
+
+<pre><span id="MODULEMap"><span class="keyword">module</span> <a href="Domain_name.Map.html">Map</a></span>: <code class="type">Map.S</code><code class="type">  with type key = t</code></pre><div class="info">
+<p>The module of a domain name map</p>
+
+</div>
+
+<pre><span id="MODULESet"><span class="keyword">module</span> <a href="Domain_name.Set.html">Set</a></span>: <code class="type">Set.S</code><code class="type">  with type elt = t</code></pre><div class="info">
+<p>The module of a domain name set</p>
+
+</div>
+</body></html>

@@ -1,0 +1,158 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Domain_name" rel="Chapter" href="Domain_name.html"><title>Index of values</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Index of values</h1>
+<table>
+<tr><td align="left"><div>C</div></td></tr>
+<tr><td><a href="Domain_name.html#VALcanonical">canonical</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">canonical&nbsp;t</code> is <code class="code">t'</code>, the canonical domain name, as specified in RFC 4034
+    (and 2535): all characters are lowercase.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Domain_name.html#VALcompare">compare</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">compare&nbsp;t&nbsp;t'</code> compares the domain names <code class="code">t</code> and <code class="code">t'</code> using a case
+    insensitive string comparison.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Domain_name.html#VALcompare_sub">compare_sub</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">compare_sub&nbsp;t&nbsp;t'</code> compares the labels <code class="code">t</code> and <code class="code">t'</code> using a case
+    insensitive string comparison.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>D</div></td></tr>
+<tr><td><a href="Domain_name.html#VALdrop_labels">drop_labels</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">drop_labels&nbsp;~back&nbsp;~amount&nbsp;t</code> is either <code class="code">t</code>, a domain name with <code class="code">amount</code>
+    (defaults to 1) labels dropped from the beginning (unless <code class="code">back</code> is provided
+    and <code class="code"><span class="keyword">true</span></code>, defaults to <code class="code"><span class="keyword">false</span></code>).</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Domain_name.html#VALdrop_labels_exn">drop_labels_exn</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">drop_labels_exn&nbsp;~back&nbsp;~amount&nbsp;t</code> is either <code class="code">t</code>, a domain name with <code class="code">amount</code>
+    (defaults to 1) labels dropped from the beginning (unless <code class="code">back</code> is provided
+    and <code class="code"><span class="keyword">true</span></code>, defaults to <code class="code"><span class="keyword">false</span></code>).</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>E</div></td></tr>
+<tr><td><a href="Domain_name.html#VALequal">equal</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">equal&nbsp;~case&nbsp;t&nbsp;t'</code> is <code class="code"><span class="keyword">true</span></code> if all labels of <code class="code">t</code> and <code class="code">t'</code> are equal.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>I</div></td></tr>
+<tr><td><a href="Domain_name.html#VALis_hostname">is_hostname</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">is_hostname&nbsp;t</code> is <code class="code"><span class="keyword">true</span></code> if <code class="code">t</code> is a hostname: the contents of the domain
+    name is limited: each label may start with a digit or letter, followed by
+    digits, letters, or hyphens.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Domain_name.html#VALis_service">is_service</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">is_service&nbsp;t</code> is <code class="code"><span class="keyword">true</span></code> if <code class="code">t</code> is a service label: the first label is a
+    service name (containing of letters, digits, hyphens) prefixed with "_".</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>O</div></td></tr>
+<tr><td><a href="Domain_name.html#VALof_string">of_string</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">of_string&nbsp;~hostname&nbsp;name</code> is either <code class="code">t</code>, the domain name, or an error if
+    the provided <code class="code">name</code> is not a valid domain name.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Domain_name.html#VALof_string_exn">of_string_exn</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">of_string_exn&nbsp;~hostname&nbsp;name</code> is <code class="code">t</code>, the domain name.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Domain_name.html#VALof_strings">of_strings</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">of_strings&nbsp;~hostname&nbsp;labels</code> is either <code class="code">t</code>, a domain name, or an error if
+    the provided <code class="code">labels</code> violate domain name constraints.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Domain_name.html#VALof_strings_exn">of_strings_exn</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">of_strings_exn&nbsp;~hostname&nbsp;labels</code> is <code class="code">t</code>, a domain name.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>P</div></td></tr>
+<tr><td><a href="Domain_name.html#VALpp">pp</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">pp&nbsp;ppf&nbsp;t</code> pretty prints the domain name <code class="code">t</code> on <code class="code">ppf</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Domain_name.html#VALprepend">prepend</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">prepend&nbsp;~hostname&nbsp;name&nbsp;pre</code> is either <code class="code">t</code>, the new domain name, or an
+    error.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Domain_name.html#VALprepend_exn">prepend_exn</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">prepend_exn&nbsp;~hostname&nbsp;name&nbsp;pre</code> is <code class="code">t</code>, the new domain name.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>R</div></td></tr>
+<tr><td><a href="Domain_name.html#VALroot">root</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">root</code> is the root domain ("."), the empty label.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>S</div></td></tr>
+<tr><td><a href="Domain_name.html#VALsub">sub</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">sub&nbsp;~subdomain&nbsp;~domain</code> is <code class="code"><span class="keyword">true</span></code> if <code class="code">subdomain</code> contains any labels
+    prepended to <code class="code">domain</code>: <code class="code">foo.bar.com</code> is a subdomain of <code class="code">bar.com</code> and of
+    <code class="code">com</code>, <code class="code">sub&nbsp;~subdomain:x&nbsp;~domain:root</code> is true for all <code class="code">x</code>.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>T</div></td></tr>
+<tr><td><a href="Domain_name.html#VALto_string">to_string</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">to_string&nbsp;t</code> is <code class="code"><span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"."</span>&nbsp;(to_strings&nbsp;t)</code>, a human-readable
+    representation of <code class="code">t</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Domain_name.html#VALto_strings">to_strings</a> [<a href="Domain_name.html">Domain_name</a>]</td>
+<td><div class="info">
+<p><code class="code">to_strings&nbsp;t</code> is the list of labels of <code class="code">t</code>.</p>
+
+</div>
+</td></tr>
+</table>
+</body>
+</html>
