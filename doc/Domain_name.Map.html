@@ -18,10 +18,19 @@
 </div>
 <h1>Module <a href="type_Domain_name.Map.html">Domain_name.Map</a></h1>
 
-<pre><span id="MODULEMap"><span class="keyword">module</span> Map</span>: <code class="type">Map.S</code><code class="type">  with type key = t</code></pre><div class="info module top">
+<pre><span id="MODULEMap"><span class="keyword">module</span> Map</span>: <code class="code"><span class="keyword">sig</span></code> <a href="Domain_name.Map.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
 <div class="info-desc">
 <p>The module of a domain name map</p>
 </div>
 </div>
 <hr width="100%">
+
+<pre><span class="keyword">include</span> Map.S</pre>
+
+<pre><span id="VALfind"><span class="keyword">val</span> find</span> : <code class="type">key -> 'a <a href="Domain_name.html#TYPEt">Domain_name.t</a> -> 'a option</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">find&nbsp;key&nbsp;t</code> is <code class="code"><span class="constructor">Some</span>&nbsp;a</code> where a is the binding of <code class="code">key</code> in <code class="code">t</code>. <code class="code"><span class="constructor">None</span></code> if
+      the <code class="code">key</code> is not present.</p>
+</div>
+</div>
 </body></html>
