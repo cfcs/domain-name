@@ -16,7 +16,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;?hostname:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Domain_name</span>.t,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Msg</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;])&nbsp;<span class="constructor">Pervasives</span>.result<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_string_exn&nbsp;:&nbsp;?hostname:bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Domain_name</span>.t<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_string&nbsp;:&nbsp;<span class="constructor">Domain_name</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_string&nbsp;:&nbsp;?trailing:bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Domain_name</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;canonical&nbsp;:&nbsp;<span class="constructor">Domain_name</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Domain_name</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_hostname&nbsp;:&nbsp;<span class="constructor">Domain_name</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_service&nbsp;:&nbsp;<span class="constructor">Domain_name</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
@@ -120,7 +120,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;?hostname:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="constructor">Domain_name</span>.t,&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Msg</span>&nbsp;<span class="keyword">of</span>&nbsp;string&nbsp;])&nbsp;<span class="constructor">Pervasives</span>.result<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_strings_exn&nbsp;:&nbsp;?hostname:bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Domain_name</span>.t<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_strings&nbsp;:&nbsp;<span class="constructor">Domain_name</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_strings&nbsp;:&nbsp;?trailing:bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Domain_name</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;list<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;pp&nbsp;:&nbsp;<span class="constructor">Domain_name</span>.t&nbsp;<span class="constructor">Fmt</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_array&nbsp;:&nbsp;string&nbsp;array&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Domain_name</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_array&nbsp;:&nbsp;<span class="constructor">Domain_name</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;array<br>

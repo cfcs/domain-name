@@ -33,13 +33,19 @@
     charactes.  The total length of a domain name is limited to 253 (byte
     representation is 255), but other protocols (such as SMTP) may apply even
     smaller limits.  A domain name label is case preserving, comparison is done
-    in a case insensitive manner.</p>
+    in a case insensitive manner.  Every <code class="code">t</code> is a fully qualified domain name,
+    its last label is the <code class="code">root</code> label.</p>
 
 <p>The invariants on the length of domain names are preserved throughout the
     module - no <code class="code">t</code> will exist which violates these.</p>
 
 <p>The specification of domain names originates from
     <a href="https://tools.ietf.org/html/rfc1035">RFC 1035</a>.</p>
+
+<p>Constructing a <code class="code">t</code> (via <code class="code">of_string</code>, <code class="code">of_string_exn</code>, <code class="code">of_strings</code>) does
+    not require a trailing dot.</p>
+
+<p><em>0.1.1 - <a href="https://github.com/hannesm/domain-name ">homepage</a></em></p>
 </div>
 </div>
 
@@ -55,7 +61,7 @@
 <p><code class="code">of_string&nbsp;~hostname&nbsp;name</code> is either <code class="code">t</code>, the domain name, or an error if
     the provided <code class="code">name</code> is not a valid domain name.  If <code class="code">hostname</code> is provided
     and <code class="code"><span class="keyword">true</span></code> (the default), the contents is additionally checked for being a
-    valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+    valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.  A trailing dot is not requred.</p>
 </div>
 </div>
 
@@ -63,17 +69,20 @@
 <div class="info-desc">
 <p><code class="code">of_string_exn&nbsp;~hostname&nbsp;name</code> is <code class="code">t</code>, the domain name.  If <code class="code">hostname</code> is
     provided and <code class="code"><span class="keyword">true</span></code> (the default), the contents is additionally checked for
-    being a valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+    being a valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.  A trailing dot is not
+    required.</p>
 </div>
 <ul class="info-attributes">
 <li><b>Raises</b> <code>Invalid_argument</code> if <code class="code">name</code> is not a valid domain name.</li>
 </ul>
 </div>
 
-<pre><span id="VALto_string"><span class="keyword">val</span> to_string</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> string</code></pre><div class="info ">
+<pre><span id="VALto_string"><span class="keyword">val</span> to_string</span> : <code class="type">?trailing:bool -> <a href="Domain_name.html#TYPEt">t</a> -> string</code></pre><div class="info ">
 <div class="info-desc">
-<p><code class="code">to_string&nbsp;t</code> is <code class="code"><span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"."</span>&nbsp;(to_strings&nbsp;t)</code>, a human-readable
-    representation of <code class="code">t</code>.</p>
+<p><code class="code">to_string&nbsp;~trailing&nbsp;t</code> is <code class="code"><span class="constructor">String</span>.concat&nbsp;~sep:<span class="string">"."</span>&nbsp;(to_strings&nbsp;t)</code>, a
+    human-readable representation of <code class="code">t</code>.  If <code class="code">trailing</code> is provided and
+    <code class="code"><span class="keyword">true</span></code> (defaults to <code class="code"><span class="keyword">false</span></code>), the resulting string will contain a trailing
+    dot.</p>
 </div>
 </div>
 <h3 id="2_Predicatesandbasicoperations">Predicates and basic operations</h3>
@@ -190,13 +199,15 @@
 <p><code class="code">of_strings&nbsp;~hostname&nbsp;labels</code> is either <code class="code">t</code>, a domain name, or an error if
     the provided <code class="code">labels</code> violate domain name constraints.  If <code class="code">hostname</code> is
     provided and <code class="code"><span class="keyword">true</span></code> (the default), the labels are additionally checked for
-    being a valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.</p>
+    being a valid hostname using <a href="Domain_name.html#VALis_hostname"><code class="code"><span class="constructor">Domain_name</span>.is_hostname</code></a>.  A trailing empty
+    label is not required.</p>
 </div>
 </div>
 
 <pre><span id="VALof_strings_exn"><span class="keyword">val</span> of_strings_exn</span> : <code class="type">?hostname:bool -> string list -> <a href="Domain_name.html#TYPEt">t</a></code></pre><div class="info ">
 <div class="info-desc">
-<p><code class="code">of_strings_exn&nbsp;~hostname&nbsp;labels</code> is <code class="code">t</code>, a domain name.</p>
+<p><code class="code">of_strings_exn&nbsp;~hostname&nbsp;labels</code> is <code class="code">t</code>, a domain name.  A trailing empty
+    label is not required.</p>
 </div>
 <ul class="info-attributes">
 <li><b>Raises</b> <code>Invalid_argument</code> if <code class="code">labels</code> are not a valid domain name. If
@@ -206,9 +217,11 @@
 </ul>
 </div>
 
-<pre><span id="VALto_strings"><span class="keyword">val</span> to_strings</span> : <code class="type"><a href="Domain_name.html#TYPEt">t</a> -> string list</code></pre><div class="info ">
+<pre><span id="VALto_strings"><span class="keyword">val</span> to_strings</span> : <code class="type">?trailing:bool -> <a href="Domain_name.html#TYPEt">t</a> -> string list</code></pre><div class="info ">
 <div class="info-desc">
-<p><code class="code">to_strings&nbsp;t</code> is the list of labels of <code class="code">t</code>.</p>
+<p><code class="code">to_strings&nbsp;~trailing&nbsp;t</code> is the list of labels of <code class="code">t</code>.  If <code class="code">trailing</code> is
+    provided and <code class="code"><span class="keyword">true</span></code> (defaults to <code class="code"><span class="keyword">false</span></code>), the resulting list will contain
+    a trailing empty label.</p>
 </div>
 </div>
 <h3 id="2_Prettyprinter">Pretty printer</h3>
